@@ -5,6 +5,7 @@ description: 用户提供报错信息或描述异常行为时使用
 
 ## 依赖（必须存在且必须遵守）
 - docs/global/naming-rule.md
+- docs/global/vision.md
 
 ## 流程（严格执行）
 
