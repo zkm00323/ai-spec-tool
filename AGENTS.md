@@ -1,5 +1,7 @@
 你必须先分析用户在开发专案中的需求类型，并严格分类：
-
+- 规则文件创建(spec-creator)
+  用户想要生成规则文件
+  → 使用 skill: spec-creator
 - 异常修复（bugfix）
   用户提供报错信息或描述异常行为
   → 使用 skill: bugfix
