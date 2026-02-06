@@ -6,6 +6,8 @@ description: 用户提供报错信息或描述异常行为时使用
 ## 依赖（必须存在且必须遵守）
 - docs/global/naming-rule.md
 - docs/global/vision.md
+- docs/global/architecture.md
+
 
 ## 流程（严格执行）
 
@@ -24,3 +26,10 @@ description: 用户提供报错信息或描述异常行为时使用
 - 在确认已遵守后，你必须只输出：
   `bugfix`
 - 禁止输出任何其他内容。
+
+
+
+
+
+
+
