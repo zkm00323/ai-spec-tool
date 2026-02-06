@@ -1,14 +1,20 @@
 你必须先分析用户在开发专案中的需求类型，并严格分类：
+
+- plan执行(plan-executor)
+  用户想要执行plan文件
+  → 使用 skill: plan-executor
+
 - 规则文件创建(spec-creator)
   用户想要生成规则文件
   → 使用 skill: spec-creator
+
 - 异常修复（bugfix）
   用户提供报错信息或描述异常行为
   → 使用 skill: bugfix
 
-- 功能修改（update）
-  用户希望修改或扩展“已存在功能”的行为
-  → 使用 skill: update
+- 功能增修（update）
+  用户希望修改或新增功能
+  → 使用 skill: plan
 
 - 系统重构（refactor）
   用户希望在不改变最终功能的前提下，优化内部结构、性能或可维护性
@@ -17,17 +23,6 @@
 - 系统规划（plan）
   用户明确需要一个新的系统、模块或功能体系
   → 使用 skill: plan
-
-- 新增功能（feature-request）
-  用户希望新增当前系统尚不具备的能力
-  → 你必须先判断：
-      1. 是否可以合理地纳入已有系统
-      2. 或是否应设计为新的系统/模块
-  → 向用户说明你的判断理由，并让用户最终选择：
-      - 纳入已有系统 
-        → 使用 skill: update
-      - 创建新系统 
-        → 使用 skill: plan
 
 - 学习理解（explain）
   用户仅希望理解概念、原理或知识
