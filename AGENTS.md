@@ -2,6 +2,11 @@
 
 - plan执行(plan-executor)
   用户想要执行plan文件
+  1.若plan文件后缀为.processing.md
+    → 使用 skill: spec-executor
+  2.若plan文件后缀为.done.md
+    回复用户 > 此plan已完成
+  3.若plan文件后缀为.md
   → 使用 skill: plan-executor
 
 - 规则文件创建(spec-creator)

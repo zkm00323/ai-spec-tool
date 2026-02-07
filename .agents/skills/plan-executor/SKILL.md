@@ -34,6 +34,19 @@ description: 当用户想要执行某个plan
 * `flows`：use_cases
 * `rules`：hard 規則
 
+---
+
+### 1.1 争议咨询（强制）
+
+在生成任何 Module spec **之前**，你必须先完整阅读 plan，并执行以下流程：
+
+1. 识别 plan 中**不合理 / 逻辑不通顺 / 相互矛盾**的地方（例如依赖冲突、角色与职责不一致、flows 与 rules 矛盾）
+2. 若发现问题：
+   - 必须先与用户讨论并取得结论
+   - 根据结论**修改 plan 文件本身**
+   - 只有在所有问题都收敛后，才可继续往下执行
+3. 若未发现问题：继续往下执行
+
 ### 2) Module Spec 標準模板（你必須嚴格依此結構輸出）
 
 每個 module spec 必須包含以下章節與順序（標題文字可維持你範例的繁中風格）：
@@ -44,7 +57,7 @@ description: 当用户想要执行某个plan
 
      * `module name: <name>`
      * `module type: <type>`
-     * `source plan: <plan file name>`
+     * `source plan: <plan base name>`
    * 保持你示例的 `---` 區塊樣式（兩段）
 
 2. `# 為什麼存在`
@@ -86,7 +99,7 @@ description: 当用户想要执行某个plan
 
 * `module name` ← `modules[].name`
 * `module type` ← `modules[].type`
-* `source plan` ← 使用者提供的 plan 文件名（包含副檔名）
+* `source plan` ← plan 文件基名（不包含任何副檔名或状态后缀）
 
 #### 3.2 為什麼存在 / 如果不存在
 
