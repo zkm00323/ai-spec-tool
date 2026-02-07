@@ -1,5 +1,5 @@
 ---
-name: spec-creator
+name: rules-creator
 description: 当用户指定要创建某个规则文件
 ---
 
@@ -12,4 +12,5 @@ description: 当用户指定要创建某个规则文件
 - 系统架构文件(architecture)
     请阅读:assets/architecture-gen.md
 
-    
+- UI架构文件(ui-architecture)
+    请阅读:assets/ui-architecture-gen.md

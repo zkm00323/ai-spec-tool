@@ -16,7 +16,7 @@ description: 当用户想要执行某个plan
 - **只能输出以下内容（禁止输出任何其他文字）**
     > 缺少依赖[<依赖名称>]
     > 回复「Y」开始创建依赖
-- 下一次 run 必须使用 skill: spec-creator
+- 下一次 run 必须使用 skill: rules-creator
 - 若所有依赖均存在，才可继续
 
 ---
@@ -36,7 +36,21 @@ description: 当用户想要执行某个plan
 
 ---
 
-### 1.1 争议咨询（强制）
+### 1.1 组件使用规范（Component Rules）生成条件（强制）
+
+在执行任何生成之前，必须先检查：
+`./docs/global/ui/module-ui-types.md` 是否存在且包含「UI 显示组件类型」清单
+
+规则：
+- 若条件不满足：**禁止生成 Component Rules**（仅生成 Module spec）
+- 若满足：
+  - 仅对 **module type 属于 UI 显示组件类型清单** 的模块生成 Component Rules
+  - Component Rules 文件路径：`./docs/component/<module-name>.md`
+  - 不为非 UI 组件类型生成（例如 ComponentLogic / ComponentView，除非被列入清单）
+
+---
+
+### 1.2 争议咨询（强制）
 
 在生成任何 Module spec **之前**，你必须先完整阅读 plan，并执行以下流程：
 
@@ -90,6 +104,29 @@ description: 当用户想要执行某个plan
 
 > 語言：以**繁體中文**輸出（沿用你範例語氣）。
 > 內容必須是「語義能力」與「邊界規則」，**不可落到具體函式名、HTTP、JSON schema、框架、庫、實作細節**。
+
+---
+
+### 2.1 Component Rules 標準模板（僅在允許生成時）
+
+每個 Component Rules 必須包含以下章節與順序：
+
+1. `# 组件定位`
+2. `# 允许使用场景`
+3. `# 禁止使用场景`
+4. `# 输入与输出语义`（仅描述语义，不涉及 props 细节）
+5. `# 交互与状态`（若无状态写「不適用」）
+6. `# 组合与依赖`（仅描述允许组合的模块）
+7. `# 视觉与可访问性要求`（需引用 design-tokens 的语义，并对齐 layout / responsive / patterns 的约束）
+8. `# 变更风险提示`
+
+> 语言：以**繁體中文**輸出。
+> 内容必须是「使用与边界规则」，不得出现具体实现或 API。
+> **必须引用**：
+> - `docs/global/ui/design-tokens.md`（颜色/字号/间距命名）
+> - `docs/global/ui/layout.md`（布局约束）
+> - `docs/global/ui/responsive.md`（响应规则）
+> - `docs/global/ui/patterns.md`（交互模式）
 
 ### 3) 內容映射規則（Plan → Spec）
 
@@ -231,6 +268,10 @@ description: 当用户想要执行某个plan
   - **不得将 Module spec 文件内容直接输出在对话中**
   - **若为修改既有 Module spec,必须将输出文件命名为 `.update.md`（可用新增文件或改名方式）,作为 spec-executor 的识别信号**
   - **执行完成后，必须将被执行的 plan 文件改名为 `<原文件名>.processing.md`（例如 `001-多语言内容管理.md` → `001-多语言内容管理.processing.md`）**
+  - 若符合 Component Rules 生成条件：
+    - **仅对 module type = Component 生成**
+    - 文件路径：`./docs/component/<module-name>.md`
+    - **不得将 Component Rules 内容直接输出在对话中**
 
 #### 文件路径规则
 - 文件路径：`./docs/spec/<module-type>/<module-name>.update.md`
@@ -255,6 +296,10 @@ description: 当用户想要执行某个plan
 > 1.`<文件名>`（需为可点击超链接）
 > 2.`<文件名>`（需为可点击超链接）
 > 3.`<文件名>`（需为可点击超链接）
+
+> 已完成 Component Rules 文件的生成（若有）：  
+> 1.`<文件名>`（需为可点击超链接）
+> 2.`<文件名>`（需为可点击超链接）
 
 > 接下来你可以选择：
 > 1. 讨论并修改 Module spec 文件细节  

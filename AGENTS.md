@@ -2,6 +2,7 @@
 
 - plan执行(plan-executor)
   用户想要执行plan文件
+  `./docs/plan`为plan文件路径,去里面找用户描述的plan
   1.若plan文件后缀为.processing.md
     → 使用 skill: spec-executor
   2.若plan文件后缀为.done.md
@@ -9,9 +10,9 @@
   3.若plan文件后缀为.md
   → 使用 skill: plan-executor
 
-- 规则文件创建(spec-creator)
+- 规则文件创建(rules-creator)
   用户想要生成规则文件
-  → 使用 skill: spec-creator
+  → 使用 skill: rules-creator
 
 - 异常修复（bugfix）
   用户提供报错信息或描述异常行为
