@@ -79,7 +79,7 @@ description: 执行已进入 processing 状态的 plan，按 execution_steps 读
    - **不得违背 spec 的「不做什么 / 禁止依赖 / 禁止扩充方向」**
 3. 若当前模块属于 UI 显示组件类型（见 `docs/global/ui/module-ui-types.md`）：
    - 执行前必须读取对应的 Component Rules
-   - 必须遵守 `docs/global/ui/design-tokens.md`、`layout.md`、`responsive.md`、`patterns.md` 的约束
+   - 必须遵守 `docs/global/ui/design-tokens.md`、`layout-and-responsive.md`、`patterns.md` 的约束
    - 若缺失任一 UI 规范文件：**停止并要求补齐**
    - 若存在 `docs/global/ui/accessibility.md`：**应遵守其约束**（可选）
 4. 每完成一个 module 的代码改动：

@@ -204,29 +204,18 @@
 
 ---
 
-## 5) 页面排版规范（Layout）
+## 5) 页面排版与不同屏幕规范（Layout + Responsive）
 
-你**必须**生成并保存 `./docs/global/ui/layout.md`，结构如下：
+你**必须**生成并保存 `./docs/global/ui/layout-and-responsive.md`，结构如下：
 
 ```md
-# Layout 规范
+# Layout + Responsive 规范
 
 ## 布局策略
 ## 栅格系统
 ## 容器与内容宽度
 ## 间距与对齐
 ## 典型布局结构
-```
-
----
-
-## 6) 不同屏幕的规则（Responsive）
-
-你**必须**生成并保存 `./docs/global/ui/responsive.md`，结构如下：
-
-```md
-# 不同屏幕规则
-
 ## 断点定义
 ## 侧重手机或电脑
 ## 导航在小屏的处理
@@ -236,7 +225,7 @@
 
 ---
 
-## 7) 常见页面与交互规则（Patterns）
+## 6) 常见页面与交互规则（Patterns）
 
 你**必须**生成并保存 `./docs/global/ui/patterns.md`，结构如下：
 
@@ -251,7 +240,7 @@
 
 ---
 
-## 8) 无障碍基础规范（固定内容模板）
+## 7) 无障碍基础规范（固定内容模板）
 
 若用户选择建立，必须使用以下固定结构与内容生成：
 
@@ -285,13 +274,12 @@
 - 错误状态需提供明确的恢复路径
 ```
 
-## 9) 最终输出要求（固定）
+## 8) 最终输出要求（固定）
 
 1.文件输出
 * 必须生成并保存以下文件：
   - `./docs/global/ui/design-tokens.md`
-  - `./docs/global/ui/layout.md`
-  - `./docs/global/ui/responsive.md`
+  - `./docs/global/ui/layout-and-responsive.md`
   - `./docs/global/ui/patterns.md`
   - `./docs/global/ui/module-ui-types.md`
 * 若用户选择建立 Accessibility Baseline，还需生成：
@@ -304,10 +292,9 @@
 * 对话中只允许输出：
 > 已完成 UI 规范文件的生成：  
 > 1.`design-tokens.md`  
-> 2.`layout.md`  
-> 3.`responsive.md`  
-> 4.`patterns.md`
-> 5.`module-ui-types.md`
+> 2.`layout-and-responsive.md`  
+> 3.`patterns.md`
+> 4.`module-ui-types.md`
 > 5.`accessibility.md`（若有建立）
 * 禁止输出：
   * 具体组件实现
@@ -316,7 +303,7 @@
 
 ---
 
-## 10) UI Module Types 标记（强制）
+## 9) UI Module Types 标记（强制）
 
 在生成 UI 规范时，必须读取 `./docs/global/architecture.md` 的分层/模块分类，
 并输出一份 **UI 显示组件类型清单**，用于后续生成 Component Rules。
@@ -334,3 +321,12 @@
 - <ModuleTypeA>
 - <ModuleTypeB>
 ```
+
+---
+
+## 10) 后续询问（固定）
+
+在完成以上所有 UI 规范与输出后，**必须询问用户是否执行 `ui-template-gen`**：
+> 是否执行范例界面生成（ui-template-gen）？
+> A) 是（继续执行）
+> B) 否（结束）

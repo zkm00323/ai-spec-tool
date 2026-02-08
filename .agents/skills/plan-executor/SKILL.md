@@ -117,15 +117,14 @@ description: 当用户想要执行某个plan
 4. `# 输入与输出语义`（仅描述语义，不涉及 props 细节）
 5. `# 交互与状态`（若无状态写「不適用」）
 6. `# 组合与依赖`（仅描述允许组合的模块）
-7. `# 视觉与可访问性要求`（需引用 design-tokens 的语义，并对齐 layout / responsive / patterns 的约束）
+7. `# 视觉与可访问性要求`（需引用 design-tokens 的语义，并对齐 layout-and-responsive / patterns 的约束）
 8. `# 变更风险提示`
 
 > 语言：以**繁體中文**輸出。
 > 内容必须是「使用与边界规则」，不得出现具体实现或 API。
 > **必须引用**：
 > - `docs/global/ui/design-tokens.md`（颜色/字号/间距命名）
-> - `docs/global/ui/layout.md`（布局约束）
-> - `docs/global/ui/responsive.md`（响应规则）
+> - `docs/global/ui/layout-and-responsive.md`（布局与响应约束）
 > - `docs/global/ui/patterns.md`（交互模式）
 
 ### 3) 內容映射規則（Plan → Spec）
@@ -304,8 +303,6 @@ description: 当用户想要执行某个plan
 > 接下来你可以选择：
 > 1. 讨论并修改 Module spec 文件细节  
 > 2. 直接依照spec的改动对代码进行修改
-
-> （提示）本次执行完成后，已执行的 plan 文件会被改名为 `.processing.md` 以标记已进入执行状态
 
 - 若用户选择「2. 直接依照spec的改动对代码进行修改」：
   - **必须使用** `skill: spec-executor`
