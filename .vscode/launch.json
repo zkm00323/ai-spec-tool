@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Release: patch + push + publish",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "git diff --quiet || (git add -A && git commit -m \"chore: pre-release\") && npm run version:patch && git push --follow-tags && npm publish --access public",
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}

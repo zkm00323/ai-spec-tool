@@ -65,11 +65,7 @@ description: 执行已进入 processing 状态的 plan，按 execution_steps 读
    - `source plan`
 3. `source plan` 匹配规则：
    - 去除后缀的 plan 基名要等于`source plan`除后缀的 plan 基名（如 `001-多语言内容管理`）
-4. 若 spec 不存在：
-   - **必须询问用户是否要你补齐 spec**
-   - 若用户回复「Y」：**使用 `plan-executor` 中的 Module Spec 生成方式**，仅为缺失的 module 生成对应 `.update.md`
-   - 若用户拒绝：停止并等待用户自行补齐
-5. 若 spec 存在但 frontmatter 不一致：**停止并要求修正**
+4. 若 spec 不存在或 frontmatter 不一致：**停止并要求修正**
 
 ---
 
