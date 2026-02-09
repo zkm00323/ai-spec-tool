@@ -5,7 +5,7 @@
       "name": "Release: patch + push + publish",
       "type": "node-terminal",
       "request": "launch",
-      "command": "git diff --quiet || (git add -A && git commit -m \"chore: pre-release\") && npm run version:patch && git push --follow-tags && npm publish --access public",
+      "command": "npm whoami && npm access ls-collaborators ai-spec-tool && (git diff --quiet || (git add -A && git commit -m \"chore: pre-release\")) && npm run version:patch && git push --follow-tags && npm publish --access public",
       "cwd": "${workspaceFolder}"
     }
   ]
