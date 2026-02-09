@@ -1,6 +1,6 @@
 {
   "name": "ai-spec-tool",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Installable agents + rules for AI spec workflows",
   "bin": {
     "ai-spec-tool": "bin/ai-spec-tool.js"
