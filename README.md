@@ -8,11 +8,18 @@ Installable agents + rules for AI spec workflows.
 npx ai-spec-tool init
 ```
 
+Optional:
+```bash
+npx ai-spec-tool init --ask
+npx ai-spec-tool init --force
+```
+
 ### What it does
 
 - Installs `.agents/` into the current project (merge-safe).
+- Scaffolds `docs/` base structure (no preset projects).
 - Updates/creates `AGENTS.md` using an anchored block so local edits are preserved.
-- Conflicts are written as `*.incoming` next to the original file.
+- Conflicts are written as `*.incoming` next to the original file (unless `--force` or `--ask` resolves them).
 
 ### AGENTS.md update strategy
 

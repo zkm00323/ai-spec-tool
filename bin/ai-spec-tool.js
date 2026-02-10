@@ -2,10 +2,12 @@
 
 const fs = require("fs");
 const path = require("path");
+const readline = require("readline");
 
 const ASSET_ROOT = path.resolve(__dirname, "..", "assets");
 const TEMPLATE_AGENTS = path.join(ASSET_ROOT, "AGENTS.md");
 const TEMPLATE_AGENTS_DIR = path.join(ASSET_ROOT, ".agents");
+const TEMPLATE_DOCS_DIR = path.join(ASSET_ROOT, "docs");
 
 const START = "<!-- AI-SPEC-TOOL:START -->";
 const END = "<!-- AI-SPEC-TOOL:END -->";
@@ -32,7 +34,7 @@ function nextIncomingPath(destPath) {
   return `${candidate}.${i}`;
 }
 
-function copyFileSafe(srcPath, destPath, report) {
+function copyFileSafe(srcPath, destPath, report, options) {
   if (!fs.existsSync(destPath)) {
     ensureDir(path.dirname(destPath));
     fs.copyFileSync(srcPath, destPath);
@@ -43,12 +45,17 @@ function copyFileSafe(srcPath, destPath, report) {
     report.skipped.push(destPath);
     return;
   }
+  if (options.force) {
+    fs.copyFileSync(srcPath, destPath);
+    report.updated.push(destPath);
+    return;
+  }
   const incoming = nextIncomingPath(destPath);
   fs.copyFileSync(srcPath, incoming);
   report.conflicts.push({ target: destPath, incoming });
 }
 
-function copyDirSafe(srcDir, destDir, report) {
+function copyDirSafe(srcDir, destDir, report, options) {
   ensureDir(destDir);
   const entries = fs.readdirSync(srcDir, { withFileTypes: true });
   entries.forEach((entry) => {
@@ -56,13 +63,40 @@ function copyDirSafe(srcDir, destDir, report) {
     const src = path.join(srcDir, entry.name);
     const dest = path.join(destDir, entry.name);
     if (entry.isDirectory()) {
-      copyDirSafe(src, dest, report);
+      copyDirSafe(src, dest, report, options);
       return;
     }
     if (entry.isFile()) {
-      copyFileSafe(src, dest, report);
+      copyFileSafe(src, dest, report, options);
     }
   });
+}
+
+function askYesNo(prompt) {
+  const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+  return new Promise((resolve) => {
+    rl.question(prompt, (answer) => {
+      rl.close();
+      const normalized = String(answer || "").trim().toLowerCase();
+      resolve(normalized === "y" || normalized === "yes");
+    });
+  });
+}
+
+async function resolveConflictsInteractively(report, options) {
+  if (!report.conflicts.length || !options.ask) return;
+  if (!process.stdin.isTTY) return;
+
+  for (const conflict of report.conflicts) {
+    const prompt = `Overwrite ${conflict.target} with incoming? (y/N) `;
+    const yes = await askYesNo(prompt);
+    if (yes) {
+      fs.copyFileSync(conflict.incoming, conflict.target);
+      report.updated.push(conflict.target);
+      report.conflictsResolved.push(conflict.target);
+      fs.unlinkSync(conflict.incoming);
+    }
+  }
 }
 
 function updateAgentsMd(targetPath, report) {
@@ -99,7 +133,7 @@ function updateAgentsMd(targetPath, report) {
   report.updated.push(targetPath);
 }
 
-function init() {
+async function init(options) {
   const cwd = process.cwd();
   const targetAgents = path.join(cwd, "AGENTS.md");
   const targetAgentsDir = path.join(cwd, ".agents");
@@ -108,7 +142,8 @@ function init() {
     added: [],
     updated: [],
     skipped: [],
-    conflicts: []
+    conflicts: [],
+    conflictsResolved: []
   };
 
   if (!fs.existsSync(TEMPLATE_AGENTS) || !fs.existsSync(TEMPLATE_AGENTS_DIR)) {
@@ -116,14 +151,22 @@ function init() {
     process.exit(1);
   }
 
-  copyDirSafe(TEMPLATE_AGENTS_DIR, targetAgentsDir, report);
+  copyDirSafe(TEMPLATE_AGENTS_DIR, targetAgentsDir, report, options);
+  if (fs.existsSync(TEMPLATE_DOCS_DIR)) {
+    const targetDocsDir = path.join(cwd, "docs");
+    copyDirSafe(TEMPLATE_DOCS_DIR, targetDocsDir, report, options);
+  }
   updateAgentsMd(targetAgents, report);
+  await resolveConflictsInteractively(report, options);
 
   console.log("ai-spec-tool init complete.");
   console.log(`Added: ${report.added.length}`);
   console.log(`Updated: ${report.updated.length}`);
   console.log(`Skipped: ${report.skipped.length}`);
   console.log(`Conflicts: ${report.conflicts.length}`);
+  if (report.conflictsResolved.length) {
+    console.log(`Resolved: ${report.conflictsResolved.length}`);
+  }
 
   if (report.conflicts.length) {
     console.log("\nConflicts (new versions saved as .incoming):");
@@ -134,13 +177,20 @@ function init() {
 }
 
 function main() {
-  const [command] = process.argv.slice(2);
+  const [command, ...args] = process.argv.slice(2);
+  const options = {
+    force: args.includes("--force"),
+    ask: args.includes("--ask")
+  };
   if (!command || command === "help" || command === "--help" || command === "-h") {
-    console.log("ai-spec-tool\n\nUsage:\n  ai-spec-tool init\n");
+    console.log("ai-spec-tool\n\nUsage:\n  ai-spec-tool init [--force|--ask]\n");
     return;
   }
   if (command === "init") {
-    init();
+    init(options).catch((err) => {
+      console.error(err?.message || err);
+      process.exit(1);
+    });
     return;
   }
   console.error(`Unknown command: ${command}`);

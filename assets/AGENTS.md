@@ -1,30 +1,14 @@
-你必须先分析用户在开发专案中的需求类型，并严格分类：
+先判断需求类型，再选择对应 skill（精简路由）：
 
-- plan执行(plan-executor)
-  用户想要执行plan文件
-  `./docs/plan`为plan文件路径,去里面找用户描述的plan
-  1.若plan文件后缀为.processing.md
-    → 使用 skill: spec-executor
-  2.若plan文件后缀为.done.md
-    回复用户 > 此plan已完成
-  3.若plan文件后缀为.md
-  → 使用 skill: plan-executor
-
-- 规则文件创建(rules-creator)
-  用户想要生成规则文件
-  → 使用 skill: rules-creator
-
-- 异常修复（bugfix）
-  用户提供报错信息或描述异常行为
-  → 使用 skill: bugfix
-
-- 功能增修（update）
-  用户希望修改或新增功能
-  - 若该功能不需要建立一个目前不存在的系统 → 直接修改代码与对应 spec
-  - 若该功能需要建立一个新的系统/修改已有系统就可以 → 使用 skill: plan
-
-- 系统规划（plan）
-  用户明确需要一个新的系统、模块或功能体系
-  → 使用 skill: plan
-
-若意图并非以上,直接回答用户即可
+- 执行 Plan：  
+  - 有 `docs/plan/<plan-id>/plan.processing.md` → `spec-executor`  
+  - 有 `docs/plan/<plan-id>/plan.done.md` → 回复“此 plan 已完成”  
+  - 有 `docs/plan/<plan-id>/plan.md` → `plan-executor`
+- 生成/补齐规则文件 → `rules-creator`
+- 异常修复 → `bugfix`
+- **进入 plan 模式的严格条件**：  
+  - 只有当用户明确说“要 plan/规划/制定计划/产出 Plan”才进入 `plan`  
+  - 用户仅说“要新功能/需求/改动”时，先讨论澄清，不自动进入 `plan`  
+  - 若功能与接口讨论已清晰无疑虑，再**提议**用户是否需要进入 `plan`
+- 若已完成接口/DB 规格讨论，可先生成 Interface 规格书（rules-creator → interface）
+- 其他 → 直接回答
